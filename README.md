@@ -2,10 +2,10 @@ A mobile app built with React Native and Expo that utilizes the 42 API to search
 
 ## Steps:
 
-1. [ ] **Setup Project:**
-   - [ ] Initialize a new React Native project using Expo.
-   - [ ] Set up a Git repository for version control.
-   - [ ] Create a `.env` file to store sensitive information like API keys.
+1. [x] **Setup Project:**
+   - [x] Initialize a new React Native project using Expo.
+   - [x] Set up a Git repository for version control.
+   - [x] Create a `.env` file to store sensitive information like API keys.
 
 2. [ ] **Implement Views:**
    - [ ] Design and create at least two views: one for searching 42 logins and another for displaying user information.
