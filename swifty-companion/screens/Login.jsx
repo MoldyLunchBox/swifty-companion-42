@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TextInput } from 'react-native';
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
 const Login = () => {
-    const [login, setLogin] = useState('')
+    const [login, setLogin] = useState('');
+
+    const onPressLogin = () => {
+        // Handle login logic
+        
+    };
+
     return (
         <View style={styles.container}>
             <Image
@@ -10,20 +16,19 @@ const Login = () => {
                 source={require('../assets/1337.png')}
                 resizeMode="contain"
             />
-            <View style={styles.inputView}>
-            <Text style={styles.loginText}>Search users</Text>
-                <TextInput
-                    style={styles.textInput}
-                    placeholder="Search"
-                    placeholderTextColor="gray"
-                    value={login}
-                    onChangeText={(e) => setLogin(e.trim())}
-                />
-            </View>
+            <Text style={styles.loginText}>Login</Text>
+            <TextInput
+                style={styles.textInput}
+                placeholder="Enter your username"
+                value={login}
+                onChangeText={setLogin}
+            />
+            <TouchableOpacity style={styles.buttonStyle} onPress={onPressLogin}>
+                <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
         </View>
     );
 };
-
 
 const styles = StyleSheet.create({
     container: {
@@ -31,22 +36,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-
+        paddingHorizontal: 20,
     },
     loginText: {
-
         fontSize: 24,
         marginTop: 40,
         marginBottom: 10,
     },
     image: {
-        width: "90%", // Make the image span the entire width of the screen
-        height: 100, // You can adjust the height as needed
-        
-    },
-    inputView:{
-        alignItems: 'start',
-        justifyContent: 'start',
+        width: '90%',
+        height: 100,
+        marginBottom: 20,
     },
     textInput: {
         width: '100%',
@@ -58,7 +58,22 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         fontSize: 16,
         color: '#333333',
-      },
+    },
+    buttonStyle: {
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        backgroundColor: '#000000',
+        borderWidth: 0.5,
+        borderColor: '#CCCCCC',
+    },
+    buttonText: {
+        fontSize: 18,
+        color: '#fff',
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        alignSelf: 'center',
+    },
 });
 
 export default Login;
