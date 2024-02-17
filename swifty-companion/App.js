@@ -4,18 +4,19 @@ import { SafeAreaView } from "react-native";
 import Splash from './screens/Splash';
 import { useState } from 'react';
 import Vif from './components/Vif';
+import Login from './screens/Login';
 
 export default function App() {
   const [loaded, setLoaded] = useState(false)
   return (
     <SafeAreaView style={styles.container}>
-
-      <StatusBar style="auto" />
+      <StatusBar backgroundColor="#00C4FF" hidden={false} />
       <Vif condition={!loaded}>
         <Splash setLoaded={setLoaded} />
       </Vif>
+
       <Vif condition={loaded}>
-        <Text>app loaded succesfully</Text>
+        <Login/>
       </Vif>
     </SafeAreaView>
   );
