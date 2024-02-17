@@ -1,12 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from "react-native";
+import Splash from './screens/Splash';
+import { useState } from 'react';
+import Vif from './components/Vif';
 
 export default function App() {
+  const [loaded, setLoaded] = useState(false)
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <SafeAreaView style={styles.container}>
+
       <StatusBar style="auto" />
-    </View>
+      <Vif condition={!loaded}>
+        <Splash setLoaded={setLoaded} />
+      </Vif>
+      <Vif condition={loaded}>
+        <Text>app loaded succesfully</Text>
+      </Vif>
+    </SafeAreaView>
   );
 }
 
