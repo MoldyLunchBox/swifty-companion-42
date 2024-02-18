@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-
+import axios from "axios";
+import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL } from "@env";
 const Login = () => {
     const [login, setLogin] = useState('');
 
-    const onPressLogin = () => {
+    const TOKEN_URL = "https://api.intra.42.fr/oauth/token";
+    const GRANT_TYPE = "client_credentials";
+
+    const onPressLogin = async () => {
         // Handle login logic
-        
+        data = await axios.post(TOKEN_URL, {
+            grant_type: GRANT_TYPE,
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            code: code,
+            redirect_uri: REDIRECT_URL,
+          });
+        console.log(data)
     };
 
     return (
