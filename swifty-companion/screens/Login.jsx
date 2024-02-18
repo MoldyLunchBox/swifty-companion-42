@@ -1,22 +1,37 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import axios from "axios";
-import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL } from "@env";
+// import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL } from "@env";
+// require('dotenv').config();
 const Login = () => {
     const [login, setLogin] = useState('');
-
+    const CLIENT_ID = process.env.CLIENT_ID;
+    const CLIENT_SECRET = process.env.CLIENT_SECRET;
+    const REDIRECT_URL = process.env.REDIRECT_URL;
     const TOKEN_URL = "https://api.intra.42.fr/oauth/token";
     const GRANT_TYPE = "client_credentials";
 
     const onPressLogin = async () => {
         // Handle login logic
-        data = await axios.post(TOKEN_URL, {
+        console.log(CLIENT_SECRET, CLIENT_ID)
+        const data = await axios.post(TOKEN_URL, {
             grant_type: GRANT_TYPE,
             client_id: CLIENT_ID,
             client_secret: CLIENT_SECRET,
-            code: code,
-            redirect_uri: REDIRECT_URL,
-          });
+        });
+
+        const response = await fetch('https://api.intra.42.fr/oauth/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                grant_type: 'client_credentials',
+                client_id: CLIENT_ID,
+                client_secret: CLIENT_SECRET,
+            })
+        })
+
         console.log(data)
     };
 
