@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import axios from "axios";
+import { authorize } from 'react-native-app-auth';
 // import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL } from "@env";
 // require('dotenv').config();
 const Login = () => {
@@ -14,11 +15,17 @@ const Login = () => {
     const onPressLogin = async () => {
         // Handle login logic
         console.log(CLIENT_SECRET, CLIENT_ID)
-        const data = await axios.post(TOKEN_URL, {
-            grant_type: GRANT_TYPE,
-            client_id: CLIENT_ID,
-            client_secret: CLIENT_SECRET,
+        const data = await authorize({
+            // grant_type: GRANT_TYPE,
+            clientId: 'u-s4t2ud-39aa9f9b58203c505a6088ead6040a1130f86d88712c92ae8da0694a700aad52',
+            clientSecret: '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',
+            redirectUrl: "hhhh",
+            serviceConfiguration:{
+                tokenEndpoint: TOKEN_URL,
+                authorizationEndpoint: 'https://api.intra.42.fr/oauth/authorize',
+            }
         });
+        console.log(">",data.data)
 
         const response = await fetch('https://api.intra.42.fr/oauth/token', {
             method: 'POST',
@@ -32,7 +39,24 @@ const Login = () => {
             })
         })
 
-        console.log(data)
+        if (data.data.access_token){
+            try {
+                
+                console.log("FETCHING", data.data.access_token)
+                let me = await axios.get('https://api.intra.42.fr/v2/me', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${data.data.access_token}`
+                    }
+                })
+                console.log(me.data)
+                console.log("FETCHING2")
+            } catch (error) {
+                console.log(error)
+            }
+
+        }
     };
 
     return (
