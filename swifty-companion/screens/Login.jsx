@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import axios from "axios";
-import * as AuthSession from 'expo-auth-session';
 import { useAuthRequest } from 'expo-auth-session'
+import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL } from "@env";
+import { useAuthContext } from "../store/authProvider";
 
 const Login = () => {
     const [login, setLogin] = useState('');
-    const CLIENT_ID = process.env.CLIENT_ID;
-    const CLIENT_SECRET = process.env.CLIENT_SECRET;
-    const REDIRECT_URL = process.env.REDIRECT_URL;
-    const TOKEN_URL = "https://api.intra.42.fr/oauth/token";
-    const GRANT_TYPE = "client_credentials";
+    let { signIn, signOut } = useAuthContext();
+
     const [request, response, promptAsync] = useAuthRequest({
-        clientId: 'u-s4t2ud-39aa9f9b58203c505a6088ead6040a1130f86d88712c92ae8da0694a700aad52',
-        clientSecret: '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',
-        redirectUri: 'exp://8bz5ypq-anonymous-8081.exp.direct',
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        redirectUri: REDIRECT_URL,
         scopes: ['public']
     }, {
         authorizationEndpoint: 'https://api.intra.42.fr/oauth/authorize',
@@ -22,28 +20,16 @@ const Login = () => {
     });
 
     const onPressLogin = async () => {
-        let c = await promptAsync()
-        const { code } = c.params;
-        try {
-            const tokenResponse = await axios.post('https://api.intra.42.fr/oauth/token', {
-                client_id: 'u-s4t2ud-39aa9f9b58203c505a6088ead6040a1130f86d88712c92ae8da0694a700aad52',
-                redirect_uri: 'exp://8bz5ypq-anonymous-8081.exp.direct',
-                code: code,
-                grant_type: 'authorization_code',
-                client_secret: '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', // Only required for some OAuth providers
-            });
-            const { access_token, refresh_token, expires_in } = tokenResponse.data;
-            // Now you have access_token, refresh_token, and expires_in     
-            // You can store these tokens securely in your app
-
-            console.log("=>", access_token)
-        } catch (error) {
-            console.error('Error exchanging code for token:', error);
-        }
-        // }
-        // Handle login logic
+        console.log('signIn')
+        let res = await promptAsync()
+        console.log(res.params.code)
+        await signIn(res.params.code).catch((error) =>
+            console.log("error:", error)
+        );
     };
-
+    const logmeout = () => {
+        signOut()
+    }
     return (
         <View style={styles.container}>
             <Image
@@ -60,6 +46,9 @@ const Login = () => {
             />
             <TouchableOpacity style={styles.buttonStyle} onPress={onPressLogin}>
                 <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonStyle} onPress={logmeout}>
+                <Text style={styles.buttonText}>Logout</Text>
             </TouchableOpacity>
         </View>
     );
