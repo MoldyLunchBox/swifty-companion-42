@@ -29,13 +29,13 @@ import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL } from "@env";
           return {
             ...prevState,
             online: true,
-            userToken: action.token,
+            token: action.token,
           };
         } else if (action.type === "SIGN_OUT") {
           return {
             ...prevState,
             online: false,
-            userToken: null,
+            token: null,
           };
         } 
         // Default return in case action.type does not match any case
@@ -44,14 +44,14 @@ import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL } from "@env";
       {
         isLoading: true,
         online: false,
-        userToken: null,
+        token: null,
         light: true,
       }
     );
     useEffect(() => {
     
       const bootstrapAsync = async () => {
-        let userToken;
+        let token;
         try {
           const { tokenInfo } = await handleTokenExpiration(dispatch);
           if (!tokenInfo.refreshed) {
