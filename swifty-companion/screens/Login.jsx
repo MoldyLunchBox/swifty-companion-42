@@ -1,25 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import axios from "axios";
+import { useAuthRequest } from 'expo-auth-session'
 import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL } from "@env";
+import { useAuthContext } from "../store/authProvider";
+
 const Login = () => {
     const [login, setLogin] = useState('');
-
-    const TOKEN_URL = "https://api.intra.42.fr/oauth/token";
-    const GRANT_TYPE = "client_credentials";
+    let {state, signIn, signOut } = useAuthContext();
+useEffect(()=>{
+console.log('state now' , state)
+},[])
+    const [request, response, promptAsync] = useAuthRequest({
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        redirectUri: REDIRECT_URL,
+        scopes: ['public']
+    }, {
+        authorizationEndpoint: 'https://api.intra.42.fr/oauth/authorize',
+        tokenEndpoint: 'https://api.intra.42.fr/oauth/token'
+    });
 
     const onPressLogin = async () => {
-        // Handle login logic
-        data = await axios.post(TOKEN_URL, {
-            grant_type: GRANT_TYPE,
-            client_id: CLIENT_ID,
-            client_secret: CLIENT_SECRET,
-            code: code,
-            redirect_uri: REDIRECT_URL,
-          });
-        console.log(data)
+        console.log('signIn')
+        let res = await promptAsync()
+        console.log(res.params.code)
+        await signIn(res.params.code).catch((error) =>
+            console.log("error:", error)
+        );
     };
-
+    const logmeout = () => {
+        signOut()
+    }
     return (
         <View style={styles.container}>
             <Image
@@ -36,6 +48,9 @@ const Login = () => {
             />
             <TouchableOpacity style={styles.buttonStyle} onPress={onPressLogin}>
                 <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonStyle} onPress={logmeout}>
+                <Text style={styles.buttonText}>Logout</Text>
             </TouchableOpacity>
         </View>
     );

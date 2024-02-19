@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TextInput } from 'react-native';
 
-const Login = () => {
+const Search = () => {
     const [login, setLogin] = useState('')
     return (
         <View style={styles.container}>
@@ -11,7 +11,7 @@ const Login = () => {
                 resizeMode="contain"
             />
             <View style={styles.inputView}>
-            <Text style={styles.loginText}>Search users</Text>
+            <Text style={styles.loginText}>Search usersss</Text>
                 <TextInput
                     style={styles.textInput}
                     placeholder="Search"
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
       },
 });
 
-export default Login;
+export default Search;
