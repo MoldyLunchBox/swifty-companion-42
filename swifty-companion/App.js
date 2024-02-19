@@ -5,20 +5,23 @@ import Splash from './screens/Splash';
 import { useState } from 'react';
 import Vif from './components/Vif';
 import Login from './screens/Login';
+import  AuthProvider  from "./store/authProvider";
 
 export default function App() {
   const [loaded, setLoaded] = useState(false)
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor="#00C4FF" hidden={false} />
-      <Vif condition={!loaded}>
-        <Splash setLoaded={setLoaded} />
-      </Vif>
+    <AuthProvider>
+      <SafeAreaView style={styles.container}>
+        <StatusBar backgroundColor="#00C4FF" hidden={false} />
+        <Vif condition={!loaded}>
+          <Splash setLoaded={setLoaded} />
+        </Vif>
 
-      <Vif condition={loaded}>
-        <Login/>
-      </Vif>
-    </SafeAreaView>
+        <Vif condition={loaded}>
+          <Login />
+        </Vif>
+      </SafeAreaView>
+    </AuthProvider>
   );
 }
 
