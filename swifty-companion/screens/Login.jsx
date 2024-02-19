@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import axios from "axios";
 import { useAuthRequest } from 'expo-auth-session'
@@ -7,8 +7,10 @@ import { useAuthContext } from "../store/authProvider";
 
 const Login = () => {
     const [login, setLogin] = useState('');
-    let { signIn, signOut } = useAuthContext();
-
+    let {state, signIn, signOut } = useAuthContext();
+useEffect(()=>{
+console.log('state now' , state)
+},[])
     const [request, response, promptAsync] = useAuthRequest({
         clientId: CLIENT_ID,
         clientSecret: CLIENT_SECRET,
