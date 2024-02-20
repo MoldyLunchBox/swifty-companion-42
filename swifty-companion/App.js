@@ -10,10 +10,10 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <SafeAreaView style={styles.container}>
+      {/* <SafeAreaView style={styles.container}> */}
         <StatusBar backgroundColor="#00C4FF" hidden={false} />
         <Routes loaded={loaded} setLoaded={setLoaded} />
-      </SafeAreaView>
+      {/* </SafeAreaView> */}
     </AuthProvider>
   );
 }

@@ -1,8 +1,22 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { useAuthRequest } from 'expo-auth-session'
+import { useAuthContext } from "../store/authProvider";
+import { fetchUser } from '../utils/searchUsers';
 
-const Search = () => {
-    const [login, setLogin] = useState('')
+const Search = ({navigation}) => {
+    const [login, setLogin] = useState('');
+    let {state, dispatch } = useAuthContext();
+console.log("we r in search")
+
+
+
+const hundleSearch = async () => {
+    console.log('login', login)
+    const res = await fetchUser(login.trim(), dispatch)
+    navigation.navigate("profile", res);
+    //    console.log(res)
+    };
     return (
         <View style={styles.container}>
             <Image
@@ -10,20 +24,19 @@ const Search = () => {
                 source={require('../assets/1337.png')}
                 resizeMode="contain"
             />
-            <View style={styles.inputView}>
-            <Text style={styles.loginText}>Search usersss</Text>
-                <TextInput
-                    style={styles.textInput}
-                    placeholder="Search"
-                    placeholderTextColor="gray"
-                    value={login}
-                    onChangeText={(e) => setLogin(e.trim())}
-                />
-            </View>
+            <Text style={styles.loginText}>Search user</Text>
+            <TextInput
+                style={styles.textInput}
+                placeholder="Enter user login"
+                value={login}
+                onChangeText={setLogin}
+            />
+            <TouchableOpacity style={styles.buttonStyle} onPress={hundleSearch}>
+                <Text style={styles.buttonText}>Search</Text>
+            </TouchableOpacity>
         </View>
     );
 };
-
 
 const styles = StyleSheet.create({
     container: {
@@ -31,22 +44,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-
+        paddingHorizontal: 20,
     },
     loginText: {
-
         fontSize: 24,
         marginTop: 40,
         marginBottom: 10,
     },
     image: {
-        width: "90%", // Make the image span the entire width of the screen
-        height: 100, // You can adjust the height as needed
-        
-    },
-    inputView:{
-        alignItems: 'start',
-        justifyContent: 'start',
+        width: '90%',
+        height: 100,
+        marginBottom: 20,
     },
     textInput: {
         width: '100%',
@@ -58,7 +66,22 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         fontSize: 16,
         color: '#333333',
-      },
+    },
+    buttonStyle: {
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        backgroundColor: '#000000',
+        borderWidth: 0.5,
+        borderColor: '#CCCCCC',
+    },
+    buttonText: {
+        fontSize: 18,
+        color: '#fff',
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        alignSelf: 'center',
+    },
 });
 
 export default Search;

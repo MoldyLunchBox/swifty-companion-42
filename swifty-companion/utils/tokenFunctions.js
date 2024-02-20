@@ -55,40 +55,4 @@ export const handleTokenExpiration = async (dispatch) => {
   }
 };
 
-export const getUser = async (user, dispatch) => {
-  const { tokenInfo } = await handleTokenExpiration(dispatch);
-  const { access_token } = tokenInfo;
-  return new Promise(async (resolve, reject) => {
-    return await axios
-      .get(USER_URL + user, {
-        headers: { Authorization: `Bearer ${access_token}` },
-      })
-      .then((value) => {
-        const {
-          login,
-          correction_point: correction,
-          wallet,
-          location,
-          projects_users: projects,
-          cursus_users: cursus,
-          image: { link: picture },
-        } = value.data;
-        const data = {};
-        Object.assign(data, {
-          login,
-          correction,
-          wallet,
-          location,
-          projects,
-          picture,
-          cursus,
-        });
-        resolve(data);
-      })
-      .catch((error) => {
-        // console.log("error:error:", error);
-        reject("User not found!:");
-      });
-  });
-  // });
-};
+
