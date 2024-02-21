@@ -8,6 +8,7 @@ import { useAuthContext } from "../store/authProvider";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Profile from './Profile'
+
 const Stack = createNativeStackNavigator();
 
 const Routes = ({ loaded, setLoaded }) => {
@@ -20,13 +21,17 @@ const Routes = ({ loaded, setLoaded }) => {
       </Vif>
 
       <Vif condition={loaded}>
+      {/* <SafeAreaView> */}
         <NavigationContainer>
           <Stack.Navigator initialRouteName={`${state.token ? 'search' : 'login'}`} screenOptions={{ headerShown: false }}>
+            
             <Stack.Screen name="search" component={Search} />
+            
             <Stack.Screen name="login" component={Login} />
             <Stack.Screen name="profile" component={Profile} />
           </Stack.Navigator>
         </NavigationContainer>
+      {/* </SafeAreaView> */}
       </Vif>
     </>
   )
