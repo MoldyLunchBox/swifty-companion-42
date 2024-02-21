@@ -1,15 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Image, Text, StyleSheet, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
 import ProgressBar from '../components/ProgressBar';
+import Accordion from '../components/Acordion';
 
 const Profile = ({ navigation, route }) => {
     const [user, setUser] = useState(route.params)
+    const [panels, setPanels] = useState([
+        { id: 1, title: 'Projects', content: user.projects_users, isExpanded: false },
+        { id: 2, title: 'Panel 2', content: 'Content for Panel 2', isExpanded: false },
+        { id: 3, title: 'Panel 3', content: 'Content for Panel 3', isExpanded: false },
+    ]);
+    const togglePanel = (id) => {
+        const updatedPanels = panels.map((panel) =>
+            panel.id === id ? { ...panel, isExpanded: !panel.isExpanded } : panel
+        );
+        setPanels(updatedPanels);
+    };
     const goback = () => {
 
         navigation.navigate('search')
     }
     useEffect(() => {
         console.log(user.projects_users)
+        console.log('------------------------------------ start\n\n\n')
+        user.projects_users.map((e)=>{
+            console.log(e.cursus_ids)
+            console.log(e.project.name)
+        })
+        console.log('------------------------------------ end\n\n\n')
+
     }, [user])
     return (
         <>
@@ -73,13 +92,18 @@ const Profile = ({ navigation, route }) => {
                                 </View>
 
                                 <View style={styles.row}>
-                                    <ProgressBar progress={user.cursus_users[2].level}/>
+                                    <ProgressBar progress={user.cursus_users[2].level} />
                                 </View>
 
                             </View>
                         </View>
                         {/* Bottom Part (You can add more content here if needed) */}
                         <View style={styles.bottomContainer}>
+                            <View style={panelss.container}>
+                                {panels.map((panel) => (
+                                   <Accordion key={panel.id} panel={panel} togglePanel={togglePanel}/>
+                                ))}
+                            </View>
                             <TouchableOpacity onPress={goback}>
                                 <Text>go back</Text>
                             </TouchableOpacity>
@@ -94,6 +118,7 @@ const Profile = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        
     },
     topContainer: {
         flex: 1,
@@ -135,8 +160,6 @@ const styles = StyleSheet.create({
     bottomContainer: {
         flex: 1,
         backgroundColor: 'lightyellow',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     br4: {
         borderRadius: 4
@@ -158,6 +181,35 @@ const styles = StyleSheet.create({
 });
 
 
+const panelss = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: 20,
+        backgroundColor: 'lightblue',
+
+    },
+    panel: {
+        backgroundColor: '#ffffff',
+        borderWidth: 1,
+        borderColor: '#cccccc',
+        borderRadius: 5,
+        overflow: 'hidden',
+        marginBottom: 10,
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10,
+        backgroundColor: '#f0f0f0',
+    },
+    headerText: {
+        fontWeight: 'bold',
+    },
+    content: {
+        padding: 10,
+        maxHeight: 200, // Adjust as needed
+    },
+});
 
 
 export default Profile
