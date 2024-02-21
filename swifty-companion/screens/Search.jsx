@@ -4,18 +4,18 @@ import { useAuthRequest } from 'expo-auth-session'
 import { useAuthContext } from "../store/authProvider";
 import { fetchUser } from '../utils/searchUsers';
 
-const Search = ({navigation}) => {
+const Search = ({ navigation }) => {
     const [login, setLogin] = useState('');
-    let {state, dispatch } = useAuthContext();
-console.log("we r in search")
+    let { state, dispatch } = useAuthContext();
+    console.log("we r in search")
 
 
 
-const hundleSearch = async () => {
-    console.log('login', login)
-    const res = await fetchUser(login.trim(), dispatch)
-    navigation.navigate("profile", res);
-    //    console.log(res)
+    const hundleSearch = async () => {
+        console.log('login', login)
+        const res = await fetchUser(login.trim(), dispatch)
+        navigation.navigate("profile", res);
+        //    console.log(res)
     };
     return (
         <View style={styles.container}>

@@ -1,39 +1,59 @@
-import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const Profile = ({}) => {
+const Profile = ({ navigation, route }) => {
+    const [user, setUser] = useState(route.params)
+    const goback = () => {
+
+        navigation.navigate('search')
+    }
+
+    useEffect(()=>{
+        console.log(user)
+    },[user])
     return (
-        <View style={styles.container}>
-            {/* Top Part - Split in Half */}
-            <View style={styles.topContainer}>
-                {/* Left Square with Image */}
-                <View style={styles.leftContainer}>
-                    {/* <Image
-                        source={require('../assets/your_image.png')}
+        <>
+            {
+                user ?
+                    <View style={styles.container}>
+
+                        {/* Top Part - Split in Half */}
+                        <View style={styles.topContainer}>
+                            {/* Left Square with Image */}
+                            <View style={styles.leftContainer}>
+                                <Image
+                        source={{uri: `${user.image.link}`}}
                         style={styles.image}
                         resizeMode="cover"
-                    /> */}
-                        <Text style={styles.title}>image place 1</Text>
+                    />
 
-                </View>
-                {/* Right Part with Multiple Rows */}
-                <View style={styles.rightContainer}>
-                    {/* Row 1 */}
-                    <View style={styles.row}>
-                        <Text style={styles.title}>Title 1</Text>
+                            </View>
+                            {/* Right Part with Multiple Rows */}
+                            <View style={styles.rightContainer}>
+                                {/* Row 1 */}
+                                <View style={styles.row}>
+                                    <Text style={styles.title}>dddd</Text>
+                                </View>
+                                {/* Row 2 */}
+                                <View style={styles.row}>
+                                    <Text style={styles.title}>Title 2</Text>
+                                </View>
+                                <View style={styles.row}>
+                                    <Text style={styles.title}>Title 2 {user.displayname}</Text>
+                                </View>
+                                {/* Add more rows as needed */}
+                            </View>
+                        </View>
+                        {/* Bottom Part (You can add more content here if needed) */}
+                        <View style={styles.bottomContainer}>
+                            <TouchableOpacity onPress={goback}>
+                                <Text>go back</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    {/* Row 2 */}
-                    <View style={styles.row}>
-                        <Text style={styles.title}>Title 2</Text>
-                    </View>
-                    {/* Add more rows as needed */}
-                </View>
-            </View>
-            {/* Bottom Part (You can add more content here if needed) */}
-            <View style={styles.bottomContainer}>
-                {/* Your content here */}
-            </View>
-        </View>
+                    : null
+            }
+        </>
     );
 };
 
@@ -57,9 +77,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     image: {
-        width: '80%', // Adjust width as needed
-        height: '80%', // Adjust height as needed
-        resizeMode: 'contain',
+        width: '50%', // Adjust width as needed
+        height: '100%', // Adjust height as needed
     },
     row: {
         flexDirection: 'row',
