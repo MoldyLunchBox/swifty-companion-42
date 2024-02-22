@@ -5,7 +5,7 @@ import { useAuthContext } from "../store/authProvider";
 import { fetchUser } from '../utils/searchUsers';
 
 const Search = ({ navigation }) => {
-    const [login, setLogin] = useState('');
+    const [login, setLogin] = useState('amya');
     let { state, dispatch } = useAuthContext();
     console.log("we r in search")
 

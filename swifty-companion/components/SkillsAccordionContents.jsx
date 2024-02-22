@@ -1,21 +1,29 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
-const ProjectsAccordionContents = ({ projects }) => {
-  const [myProjects, setMyProjects] = useState(projects);
+const SkillsAccordionContents = ({ skills }) => {
+  const [mySkills, setMySkills] = useState(null);
 
   useEffect(() => {
-    if (projects) setMyProjects(projects.filter((element) => element.cursus_ids[0] === 21));
-  }, [projects]);
+    if (skills) setMySkills(skills[2].skills);
+  }, [skills]);
+
+
+
+
 
   return (
     <View style={{  }}>
-      {myProjects.map((project) => (
-        <View key={project.id} style={styles.projectContainer}>
-          <Text style={styles.name}>{project.project.name}</Text>
-          <Text style={styles.score}>{project.final_mark}</Text>
+      {
+        mySkills ? 
+      mySkills.map((skills) => (
+        <View key={skills.id} style={styles.projectContainer}>
+          <Text style={styles.name}>{skills.name}</Text>
+          <Text style={styles.score}>{skills.level}</Text>
         </View>
-      ))}
+      ))
+      : null
+      }
     </View>
   );
 };
@@ -37,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProjectsAccordionContents;
+export default SkillsAccordionContents
