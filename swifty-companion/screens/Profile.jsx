@@ -7,7 +7,7 @@ const Profile = ({ navigation, route }) => {
     const [user, setUser] = useState(route.params)
     const [panels, setPanels] = useState([
         { id: 1, title: 'Projects', content: user.projects_users, isExpanded: false },
-        { id: 2, title: 'Panel 2', content: 'Content for Panel 2', isExpanded: false },
+        { id: 2, title: 'Skills', content: user.cursus_users, isExpanded: false },
         { id: 3, title: 'Panel 3', content: 'Content for Panel 3', isExpanded: false },
     ]);
     const togglePanel = (id) => {
@@ -20,16 +20,7 @@ const Profile = ({ navigation, route }) => {
 
         navigation.navigate('search')
     }
-    useEffect(() => {
-        console.log(user.projects_users)
-        console.log('------------------------------------ start\n\n\n')
-        user.projects_users.map((e)=>{
-            console.log(e.cursus_ids)
-            console.log(e.project.name)
-        })
-        console.log('------------------------------------ end\n\n\n')
 
-    }, [user])
     return (
         <>
             {

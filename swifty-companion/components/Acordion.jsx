@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import ProjectsAcordionContents from './ProjectsAcordionContents';
+import SkillsAccordionContents from './SkillsAccordionContents';
 
 const Acordion = ({ panel, togglePanel }) => {
     return (
@@ -14,16 +15,16 @@ const Acordion = ({ panel, togglePanel }) => {
             {/* Content */}
             {panel.isExpanded && (
                 <ScrollView style={panelsStyle.content}>
-                    <Text  style={{width:'100%', backgroundColor:'#ff0000'}}>
                         {
                             panel.title == 'Projects'
                                 ?
                                 <ProjectsAcordionContents projects={panel.content}/>
                                 :
-                                'no'
+                                panel.title == 'Skills' ?
+                                <SkillsAccordionContents skills={panel.content}/>
+                                : 
+                                <Text>sa</Text>
                         }
-                    </Text>
-
                 </ScrollView>
             )}
         </View>
@@ -35,7 +36,7 @@ const panelsStyle = StyleSheet.create({
         flex: 1,
         paddingTop: 20,
         backgroundColor: 'lightblue',
-
+        width:'100%',
     },
     panel: {
         backgroundColor: '#ffffff',
