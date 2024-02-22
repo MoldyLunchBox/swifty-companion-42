@@ -12,7 +12,9 @@ export const fetchUser = async (user, dispatch) => {
         })
         .then((value) => {
           const data = {}
-          const strings =  ['login','image','last_name','campus','projects_users','wallet', 'correction_point', 'cursus_users', 'displayname', 'kind', 'location']
+          const strings =  ['login','image','last_name','campus','projects_users','cursus_users','wallet', 'correction_point', 'cursus_users', 'displayname', 'kind', 'location']
+          
+          
           console.log('=========')
           strings.map(key=>  data[key] = value.data[key] )
           resolve(data);
