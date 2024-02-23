@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'reac
 import { useAuthRequest } from 'expo-auth-session'
 import { useAuthContext } from "../store/authProvider";
 import { fetchUser } from '../utils/searchUsers';
+import FooterBottons from '../components/FooterBottons';
 
 const Search = ({ navigation }) => {
     const [login, setLogin] = useState('amya');
@@ -12,28 +13,45 @@ const Search = ({ navigation }) => {
 
 
     const hundleSearch = async () => {
-        console.log('login', login)
-        const res = await fetchUser(login.trim(), dispatch)
-        navigation.navigate("profile", res);
+        try {
+            
+            console.log('login', login)
+            const res = await fetchUser(login.trim(), dispatch)
+            navigation.navigate("profile", res);
+        } catch (error) {
+        console.log(error)
+        }
         //    console.log(res)
     };
     return (
         <View style={styles.container}>
+            <View style={{paddingHorizontal: 20,paddingVertical: 20,width:'100%'}}>
+
             <Image
                 style={styles.image}
                 source={require('../assets/1337.png')}
                 resizeMode="contain"
-            />
+                />
             <Text style={styles.loginText}>Search user</Text>
             <TextInput
                 style={styles.textInput}
                 placeholder="Enter user login"
                 value={login}
                 onChangeText={setLogin}
-            />
-            <TouchableOpacity style={styles.buttonStyle} onPress={hundleSearch}>
-                <Text style={styles.buttonText}>Search</Text>
-            </TouchableOpacity>
+                />
+                </View>
+            <View style={{ flex: 1,width:'100%', justifyContent: 'space-between',alignContent:'center',alignItems:'center' }} >
+
+                <TouchableOpacity style={styles.buttonStyle} onPress={hundleSearch}>
+                    <Text style={styles.buttonText}>Search</Text>
+                </TouchableOpacity>
+                <View style={{width:'100%'}}>
+
+                <View style={{ backgroundColor: '#F5BD38' }}>
+                    <FooterBottons navigation={navigation} />
+</View>
+                </View>
+            </View>
         </View>
     );
 };
@@ -44,7 +62,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        paddingHorizontal: 20,
+        backgroundColor:'white'
+        
     },
     loginText: {
         fontSize: 24,

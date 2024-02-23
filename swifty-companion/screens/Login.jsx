@@ -5,7 +5,7 @@ import { useAuthRequest } from 'expo-auth-session'
 import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL } from "@env";
 import { useAuthContext } from "../store/authProvider";
 
-const Login = () => {
+const Login = ({navigation}) => {
     const [login, setLogin] = useState('');
     let {state, signIn, signOut } = useAuthContext();
 useEffect(()=>{
@@ -22,16 +22,28 @@ console.log('state now' , state)
     });
 
     const onPressLogin = async () => {
-        console.log('signIn')
-        let res = await promptAsync()
-        console.log(res.params.code)
-        await signIn(res.params.code).catch((error) =>
+        try {
+            console.log('signIn')
+            let res = await promptAsync()
+            await signIn(res.params.code)
+            
+        } catch (error) {
+            
             console.log("error:", error)
-        );
+        }
+
     };
     const logmeout = () => {
         signOut()
     }
+    useEffect(()=>{
+        if (state && state.token)
+        navigation.navigate("search");
+
+        else
+        console.log('token is not set')
+
+    },[state.token])
     return (
         <View style={styles.container}>
             <Image
