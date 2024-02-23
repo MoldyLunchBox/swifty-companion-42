@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Image, Text, StyleSheet, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
 import ProgressBar from '../components/ProgressBar';
 import Accordion from '../components/Acordion';
+import FooterBottons from '../components/FooterBottons';
 
 const Profile = ({ navigation, route }) => {
     const [user, setUser] = useState(route.params)
@@ -16,10 +17,7 @@ const Profile = ({ navigation, route }) => {
         );
         setPanels(updatedPanels);
     };
-    const goback = () => {
 
-        navigation.navigate('search')
-    }
 
     return (
         <>
@@ -92,12 +90,10 @@ const Profile = ({ navigation, route }) => {
                         <View style={styles.bottomContainer}>
                             <View style={panelss.container}>
                                 {panels.map((panel) => (
-                                   <Accordion key={panel.id} panel={panel} togglePanel={togglePanel}/>
+                                    <Accordion key={panel.id} panel={panel} togglePanel={togglePanel} />
                                 ))}
                             </View>
-                            <TouchableOpacity onPress={goback}>
-                                <Text>go back</Text>
-                            </TouchableOpacity>
+                            <FooterBottons navigation={navigation}/>
                         </View>
                     </View>
                     : null
@@ -109,7 +105,7 @@ const Profile = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        
+
     },
     topContainer: {
         flex: 1,
@@ -151,6 +147,10 @@ const styles = StyleSheet.create({
     bottomContainer: {
         flex: 1,
         backgroundColor: 'lightyellow',
+    },
+    BottomBottons: {
+        paddingVertical: 30,
+        backgroundColor: '#ff'
     },
     br4: {
         borderRadius: 4
