@@ -1,13 +1,14 @@
 import { handleTokenExpiration } from "./tokenFunctions";
 import axios from "axios";
-import { FETCH_USER_URL} from "@env";
+import { FETCH_USER_URL,FETCH_ME_URL} from "@env";
 
 export const fetchUser = async (user, dispatch) => {
     const { tokenInfo } = await handleTokenExpiration(dispatch);
     const { access_token } = tokenInfo;
+    console.log('yuser is ',access_token,FETCH_ME_URL)
     return new Promise(async (resolve, reject) => {
       return await axios
-        .get(FETCH_USER_URL + user, {
+        .get(user == 'me' ?FETCH_ME_URL: FETCH_USER_URL + user, {
           headers: { Authorization: `Bearer ${access_token}` },
         })
         .then((value) => {

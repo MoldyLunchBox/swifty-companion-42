@@ -34,16 +34,16 @@ const Profile = ({ navigation, route }) => {
 
                             {/* Top Part - Split in Half */}
                             <View style={styles.topContainer}>
-                                <View style={[styles.row,styles.rgap]}>
+                                <View style={[styles.row, styles.rgap]}>
 
                                     {/* Left Square with Image */}
-                                        <View style={styles.imageContainer}>
-                                            <ImageBackground
-                                                source={{ uri: `${user.image.link}` }}
-                                                style={styles.image}
-                                                resizeMode="cover"
-                                            />
-                                        </View>
+                                    <View style={styles.imageContainer}>
+                                        <ImageBackground
+                                            source={{ uri: `${user.image.link}` }}
+                                            style={styles.image}
+                                            resizeMode="cover"
+                                        />
+                                    </View>
                                     {/* Right Part with Multiple Rows */}
                                     <View style={styles.rightContainer}>
                                         <View style={[styles.row, styles.br4, styles.grey]}>
@@ -65,14 +65,15 @@ const Profile = ({ navigation, route }) => {
                                     </View>
                                 </View>
 
-       
-                                <View style={[{ flex: 1 }, styles.rgap,{ paddingTop:10,}]}>
-                                    <View style={[styles.col,styles.br4]}>
+
+
+                                <View style={[{ flex: 1 }, styles.rgap,]}>
+                                    <View style={[styles.col, styles.grey, styles.br4, { marginTop: 30 }]}>
                                         <Text style={styles.title}>{user.location ? 'Available' : 'Unavailable'}</Text>
                                         <Text style={styles.title}>{user.location ? user.location : '-'}</Text>
                                     </View>
 
-                                    <View style={[styles.row,styles.grey, styles.br4]}>
+                                    <View style={[styles.row, { paddingVertical: 8 }, styles.grey, styles.br4]}>
                                         <View style={styles.col}>
                                             <Text style={styles.title}>Wallet</Text>
                                             <Text style={styles.title}>{user.wallet}</Text>
@@ -95,12 +96,14 @@ const Profile = ({ navigation, route }) => {
                             </View>
                             {/* Bottom Part (You can add more content here if needed) */}
                             <View style={styles.bottomContainer}>
-                                <View style={panelss.container}>
+                                <View style={[panelss.container,]}>
                                     {panels.map((panel) => (
                                         <Accordion key={panel.id} panel={panel} togglePanel={togglePanel} />
                                     ))}
                                 </View>
-                                <FooterBottons navigation={navigation} />
+                                <View style={{ backgroundColor: '#F5BD38' }}>
+                                    <FooterBottons navigation={navigation} />
+                                </View>
                             </View>
                         </View>
                         : null
@@ -120,7 +123,7 @@ const styles = StyleSheet.create({
         // borderWidth: 3,
         // borderColor: "red",
         aspectRatio: 1, // Ensure the container maintains a square aspect ratio
-        
+
     },
     backgroundImage: {
         flex: 1,
@@ -134,7 +137,7 @@ const styles = StyleSheet.create({
     topContainer: {
         flex: 1,
         flexDirection: 'col',
-        paddingHorizontal:10,
+        paddingHorizontal: 10,
     },
 
     leftContainer: {
@@ -144,7 +147,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         rowGap: 3,
-        paddingLeft:10,
+        paddingLeft: 10,
 
     },
     image: {
@@ -160,17 +163,16 @@ const styles = StyleSheet.create({
     col: {
         flex: 1,
         flexDirection: 'col',
-        backgroundColor: '#353435',
         justifyContent: 'center',
         alignItems: 'center',
     },
     title: {
         fontSize: 16,
         fontWeight: 'bold',
+        color: 'white'
     },
     bottomContainer: {
         flex: 1,
-        backgroundColor: 'lightyellow',
     },
     BottomBottons: {
         paddingVertical: 30,
@@ -180,10 +182,10 @@ const styles = StyleSheet.create({
         borderRadius: 4
     },
     rgap: {
-        rowGap: 4
+        rowGap: 20
     },
     cgap: {
-       colGap: 4
+        colGap: 4
     },
     progressContainer: {
         height: 20,
@@ -197,7 +199,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     grey: {
-        backgroundColor: '#353435',
+        backgroundColor: 'rgba(53, 52, 53, 0.9)',
 
     }
 });
@@ -207,13 +209,11 @@ const panelss = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 20,
-        backgroundColor: 'lightblue',
+
 
     },
     panel: {
-        backgroundColor: '#ffffff',
         borderWidth: 1,
-        borderColor: '#cccccc',
         borderRadius: 5,
         overflow: 'hidden',
         marginBottom: 10,
