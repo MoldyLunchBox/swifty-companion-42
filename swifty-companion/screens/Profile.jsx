@@ -21,88 +21,112 @@ const Profile = ({ navigation, route }) => {
 
     return (
         <>
-            {
-                user ?
-                    <View style={styles.container}>
+            <ImageBackground
+                style={styles.backgroundImage}
+                source={require("../assets/42background.jpg")}
 
-                        {/* Top Part - Split in Half */}
-                        <View style={styles.topContainer}>
-                            <View style={styles.row}>
+                resizeMode="cover"
+            >
 
-                                {/* Left Square with Image */}
-                                <View style={styles.leftContainer}>
-                                    <Image
-                                        source={{ uri: `${user.image.link}` }}
-                                        style={styles.image}
-                                        resizeMode="contain"
-                                    />
+                {
+                    user ?
+                        <View style={styles.container}>
 
-                                </View>
-                                {/* Right Part with Multiple Rows */}
-                                <View style={styles.rightContainer}>
-                                    <View style={[styles.row, styles.br4]}>
-                                        <Text style={styles.title}>{user.displayname}</Text>
-                                    </View>
-                                    <View style={[styles.row, styles.br4]}>
-                                        <Text style={styles.title}>{user.last_name}</Text>
-                                    </View>
-                                    <View style={[styles.row, styles.br4]}>
-                                        <Text style={styles.title}> {user.campus[0].city}</Text>
-                                    </View>
-                                    <View style={[styles.row, styles.br4]}>
-                                        <Text style={styles.title}> {user.kind}</Text>
-                                    </View>
-                                    {/* <View style={[styles.row, styles.br4]}>
+                            {/* Top Part - Split in Half */}
+                            <View style={styles.topContainer}>
+                                <View style={[styles.row,styles.rgap]}>
+
+                                    {/* Left Square with Image */}
+                                        <View style={styles.imageContainer}>
+                                            <ImageBackground
+                                                source={{ uri: `${user.image.link}` }}
+                                                style={styles.image}
+                                                resizeMode="cover"
+                                            />
+                                        </View>
+                                    {/* Right Part with Multiple Rows */}
+                                    <View style={styles.rightContainer}>
+                                        <View style={[styles.row, styles.br4, styles.grey]}>
+                                            <Text style={styles.title}>{user.displayname}</Text>
+                                        </View>
+                                        <View style={[styles.row, styles.br4, styles.grey]}>
+                                            <Text style={styles.title}>{user.last_name}</Text>
+                                        </View>
+                                        <View style={[styles.row, styles.br4, styles.grey]}>
+                                            <Text style={styles.title}> {user.campus[0].city}</Text>
+                                        </View>
+                                        <View style={[styles.row, styles.br4, styles.grey]}>
+                                            <Text style={styles.title}> {user.kind}</Text>
+                                        </View>
+                                        {/* <View style={[styles.row, styles.br4]}>
                                         <Text style={styles.title}> {user.displayname}</Text>
                                     </View> */}
-                                    {/* Add more rows as needed */}
+                                        {/* Add more rows as needed */}
+                                    </View>
+                                </View>
+
+       
+                                <View style={[{ flex: 1 }, styles.rgap,{ paddingTop:10,}]}>
+                                    <View style={[styles.col,styles.br4]}>
+                                        <Text style={styles.title}>{user.location ? 'Available' : 'Unavailable'}</Text>
+                                        <Text style={styles.title}>{user.location ? user.location : '-'}</Text>
+                                    </View>
+
+                                    <View style={[styles.row,styles.grey, styles.br4]}>
+                                        <View style={styles.col}>
+                                            <Text style={styles.title}>Wallet</Text>
+                                            <Text style={styles.title}>{user.wallet}</Text>
+                                        </View>
+                                        <View style={styles.col}>
+                                            <Text style={styles.title}>Correction Points</Text>
+                                            <Text style={styles.title}>{user.correction_point}</Text>
+                                        </View>
+                                        <View style={styles.col}>
+                                            <Text style={styles.title}>Grade</Text>
+                                            <Text style={styles.title}>{user.cursus_users[2].grade}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={[styles.row, styles.br4]}>
+                                        <ProgressBar progress={user.cursus_users[2].level} />
+                                    </View>
+
                                 </View>
                             </View>
-
-                            <View style={[{ flex: 1 }, styles.rgap]}>
-                                <View style={styles.col}>
-                                    <Text style={styles.title}>{user.location ? 'Available' : 'Unavailable'}</Text>
-                                    <Text style={styles.title}>{user.location ? user.location : '-'}</Text>
+                            {/* Bottom Part (You can add more content here if needed) */}
+                            <View style={styles.bottomContainer}>
+                                <View style={panelss.container}>
+                                    {panels.map((panel) => (
+                                        <Accordion key={panel.id} panel={panel} togglePanel={togglePanel} />
+                                    ))}
                                 </View>
-
-                                <View style={styles.row}>
-                                    <View style={styles.col}>
-                                        <Text style={styles.title}>Wallet</Text>
-                                        <Text style={styles.title}>{user.wallet}</Text>
-                                    </View>
-                                    <View style={styles.col}>
-                                        <Text style={styles.title}>Correction Points</Text>
-                                        <Text style={styles.title}>{user.correction_point}</Text>
-                                    </View>
-                                    <View style={styles.col}>
-                                        <Text style={styles.title}>Grade</Text>
-                                        <Text style={styles.title}>{user.cursus_users[2].grade}</Text>
-                                    </View>
-                                </View>
-
-                                <View style={styles.row}>
-                                    <ProgressBar progress={user.cursus_users[2].level} />
-                                </View>
-
+                                <FooterBottons navigation={navigation} />
                             </View>
                         </View>
-                        {/* Bottom Part (You can add more content here if needed) */}
-                        <View style={styles.bottomContainer}>
-                            <View style={panelss.container}>
-                                {panels.map((panel) => (
-                                    <Accordion key={panel.id} panel={panel} togglePanel={togglePanel} />
-                                ))}
-                            </View>
-                            <FooterBottons navigation={navigation}/>
-                        </View>
-                    </View>
-                    : null
-            }
+                        : null
+                }
+            </ImageBackground>
+
         </>
     );
 };
 
 const styles = StyleSheet.create({
+    imageContainer: {
+        borderRadius: 10, // Set border radius for the container
+        overflow: 'hidden', // Clip overflow content
+        width: 250,
+        height: '100%',
+        // borderWidth: 3,
+        // borderColor: "red",
+        aspectRatio: 1, // Ensure the container maintains a square aspect ratio
+        
+    },
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover', // Cover the entire screen
+        justifyContent: 'center', // Center content vertically
+    },
     container: {
         flex: 1,
 
@@ -110,17 +134,18 @@ const styles = StyleSheet.create({
     topContainer: {
         flex: 1,
         flexDirection: 'col',
+        paddingHorizontal:10,
     },
 
     leftContainer: {
         flex: 1,
-        backgroundColor: 'lightblue',
     },
     rightContainer: {
         flex: 1,
         justifyContent: 'space-between',
-        backgroundColor: 'lightgray',
-        rowGap: 3
+        rowGap: 3,
+        paddingLeft:10,
+
     },
     image: {
         width: '100%', // Adjust width as needed
@@ -129,7 +154,6 @@ const styles = StyleSheet.create({
     row: {
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: '#353435',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -158,6 +182,9 @@ const styles = StyleSheet.create({
     rgap: {
         rowGap: 4
     },
+    cgap: {
+       colGap: 4
+    },
     progressContainer: {
         height: 20,
         backgroundColor: '#ccc',
@@ -169,6 +196,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#333',
         borderRadius: 10,
     },
+    grey: {
+        backgroundColor: '#353435',
+
+    }
 });
 
 
