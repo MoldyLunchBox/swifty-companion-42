@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator,TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import xml2js from 'xml2js';
-import Svg, { SvgXml } from 'react-native-svg';
+import Svg, {  SvgXml } from 'react-native-svg';
+import  { SvgWithCss } from 'react-native-svg/css';
 import parser from 'react-native-xml2js';
 
 function addImageLinksToSVG(svgString, cluster, setClusters) {
@@ -14,10 +15,7 @@ function addImageLinksToSVG(svgString, cluster, setClusters) {
                 cluster.forEach(item => {
                     if (item[0] === result.svg.image[i].$.id) {
                         result.svg.image[i].$['xlink:href'] = item[1].image
-                    } 
-                    // else {
-                    //     result.svg.image[i].$['xlink:href'] = null;
-                    // }
+                    }
                 })
                 if (result.svg.image[i].$['xlink:href'] === '')
                 {
@@ -38,12 +36,12 @@ function addImageLinksToSVG(svgString, cluster, setClusters) {
 const Cluster = ({ navigator }) => {
     const [clusters, setClusters] = useState(null);
     const [posts, setPosts] = useState(null);
-
+    const [cluster, setCluster] = useState(1)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                fetch('https://cdn.intra.42.fr/cluster/image/7/khouribga-cluster-e1.svg')
+                fetch('https://cdn.intra.42.fr/cluster/image/8/khouribga-cluster-e2.svg')
                     .then(response => response.text())
                     .then(data => {
                         data = data.replaceAll(/<g\b[^>]*\/?>/g, '');
@@ -79,18 +77,36 @@ const Cluster = ({ navigator }) => {
 
     return (
         <View style={styles.container}>
+            {/* Options */}
+            <View style={styles.optionsContainer}>
+                <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('e1')}>
+                    <Text style={styles.optionText}>e1</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('e2')}>
+                    <Text style={styles.optionText}>e2</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('e3')}>
+                    <Text style={styles.optionText}>e3</Text>
+                </TouchableOpacity>
+            </View>
             {/* Render the modified SVG */}
             {clusters ? (
-                <SvgXml
+                <SvgWithCss
                     xml={clusters}
                     width="100%"
                     height="100%"
                 />
             ) :
-                <Text>sdsd</Text>
+                <ActivityIndicator size='large' color={'#000'} />
             }
         </View>
     );
+};
+
+const handleOptionPress = (option) => {
+    // Handle what each option does here
+    console.log(`Option ${option} pressed`);
+    // Implement your logic accordingly
 };
 
 const styles = StyleSheet.create({
@@ -98,6 +114,21 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    optionsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+        paddingHorizontal: 20,
+    },
+    optionButton: {
+        backgroundColor: 'lightblue',
+        padding: 10,
+        borderRadius: 5,
+    },
+    optionText: {
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });
 
