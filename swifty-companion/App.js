@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from "react-native";
 import { useContext, useEffect, useState } from 'react';
 import AuthProvider from "./store/authProvider";
 import Routes from './screens/Routes';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App() {
   const [loaded, setLoaded] = useState(false)
