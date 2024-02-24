@@ -6,7 +6,15 @@ import Svg, { SvgXml } from 'react-native-svg';
 import { SvgWithCss } from 'react-native-svg/css';
 import parser from 'react-native-xml2js';
 import FooterBottons from '../components/FooterBottons';
-
+/**
+ * the svg file fetched is a map of a school floor. we call it a cluster because 
+ * its a cluster of mac computers. 
+ * this function adds profile pictures of users connected on each mac to the svg file
+ *
+ * @param {*} svgString stringified svg file of the cluster map
+ * @param {*} cluster   array of users who are connected. it holds user info such as which computer they r on
+ * @param {*} setClusters  hook to set the svg file state. which is then passed to SvgWithCss to be displayed with css enabled
+ */
 function addImageLinksToSVG(svgString, cluster, setClusters) {
     parser.parseString(svgString, (err, result) => {
         if (!err && cluster) {
@@ -109,8 +117,12 @@ const Cluster = ({ navigation }) => {
         </View>
     );
 };
+/**
+ * cluster choice. there are three clusters to choose from
+ *
+ * @param {*} option the cluster of choice
+ */
 const handleOptionPress = (option, setCluster) => {
-    console.log(`Option ${option} pressed`);
     setCluster(option)
 };
 
