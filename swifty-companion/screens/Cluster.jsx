@@ -15,22 +15,22 @@ import FooterBottons from '../components/FooterBottons';
  * @param {*} cluster   array of users who are connected. it holds user info such as which computer they r on
  * @param {*} setClusters  hook to set the svg file state. which is then passed to SvgWithCss to be displayed with css enabled
  */
-function addImageLinksToSVG(svgString, cluster, setClusters) {
+function addImageLinksToSVG(svgString, cluster, setClusters, oo) {
     parser.parseString(svgString, (err, result) => {
         if (!err && cluster) {
             // console.log(typeof(result.svg))
             for (let i = 0; i < result.svg.image.length; i++) {
-                // result.svg.image[i].$['xlink:href'] = "https://profile.intra.42.fr/images/default.png"
-                cluster.forEach(item => {
-                    if (item[0] === result.svg.image[i].$.id) {
-                        result.svg.image[i].$['xlink:href'] = item[1].image
-                    }
-                })
-                if (result.svg.image[i].$['xlink:href'] === '') {
-                    result.svg.image[i].$['xlink:href'] = null
+                console.log('first')
+                console.log(cluster[result.svg.image[i].$.id])
+
+                if (cluster[result.svg.image[i].$.id] && cluster[result.svg.image[i].$.id]['image']) {
+                    console.log('w', cluster[result.svg.image[i].$.id]['image']);
+                    result.svg.image[i].$['xlink:href'] = cluster[result.svg.image[i].$.id].image
                 }
+                else
+                    result.svg.image[i].$['xlink:href'] = 'https://m.media-amazon.com/images/I/31DhmKeNrWL._AC_UF1000,1000_QL80_.jpg'
             }
-            console.log(result.svg.image)
+            // console.log(cluster)
             var builder = new xml2js.Builder();
             var xml = builder.buildObject(result);
             // console.log(xml)
@@ -41,6 +41,13 @@ function addImageLinksToSVG(svgString, cluster, setClusters) {
     });
 }
 
+const clusterSVG = {
+    1: 'https://cdn.intra.42.fr/cluster/image/7/khouribga-cluster-e1.svg',
+    2: 'https://cdn.intra.42.fr/cluster/image/8/khouribga-cluster-e2.svg',
+    3: 'https://cdn.intra.42.fr/cluster/image/207/khga-cluster-e3.svg',
+
+}
+
 const Cluster = ({ navigation }) => {
     const [clusters, setClusters] = useState(null);
     const [posts, setPosts] = useState(null);
@@ -48,13 +55,14 @@ const Cluster = ({ navigation }) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            const svgLink = clusterSVG[cluster]
+
             try {
-                fetch('https://cdn.intra.42.fr/cluster/image/8/khouribga-cluster-e2.svg')
+                fetch(svgLink)
                     .then(response => response.text())
                     .then(data => {
                         data = data.replaceAll(/<g\b[^>]*\/?>/g, '');
                         data = data.replaceAll('</g>', '');
-                        // setClusters(data)
                         addImageLinksToSVG(data, posts, setClusters)
                     })
                     .catch(error => {
@@ -66,7 +74,7 @@ const Cluster = ({ navigation }) => {
         };
         if (posts)
             fetchData();
-    }, [posts]);
+    }, [posts, cluster]);
 
     useEffect(() => {
         try {
@@ -75,7 +83,7 @@ const Cluster = ({ navigation }) => {
                 data = data.replace(";", "")
                 data = JSON.parse(data)
                 // console.log(Object.entries(data))
-                setPosts(Object.entries(data))
+                setPosts(data)
             })
         } catch (error) {
             console.log("CAMPUS=>", error)
@@ -87,26 +95,26 @@ const Cluster = ({ navigation }) => {
         <View style={styles.container}>
             {/* Options */}
             {/* Render the modified SVG */}
-            <View style={{flex:1,width:'100%', borderColor:'yellow', borderWidth:1}}>
-            <View style={styles.optionsContainer}>
-                <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('1', setCluster)}>
-                    <Text style={styles.optionText}>e1</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('2', setCluster)}>
-                    <Text style={styles.optionText}>e2</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('3', setCluster)}>
-                    <Text style={styles.optionText}>e3</Text>
-                </TouchableOpacity>
-            </View>
+            <View style={{ flex: 1, width: '100%', borderColor: 'yellow', borderWidth: 1 }}>
+                <View style={styles.optionsContainer}>
+                    <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('1', setCluster)}>
+                        <Text style={styles.optionText}>e1</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('2', setCluster)}>
+                        <Text style={styles.optionText}>e2</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('3', setCluster)}>
+                        <Text style={styles.optionText}>e3</Text>
+                    </TouchableOpacity>
+                </View>
 
-            {clusters ? (
-                <SvgWithCss
-                xml={clusters}
-                />
+                {clusters ? (
+                    <SvgWithCss
+                        xml={clusters}
+                    />
                 ) :
-                <ActivityIndicator size='large' color={'#000'} />
-            }
+                    <ActivityIndicator size='large' color={'#000'} />
+                }
             </View>
             <View style={{ width: '100%' }}>
 
