@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import xml2js from 'xml2js';
-import Svg, {  SvgXml } from 'react-native-svg';
-import  { SvgWithCss } from 'react-native-svg/css';
+import Svg, { SvgXml } from 'react-native-svg';
+import { SvgWithCss } from 'react-native-svg/css';
 import parser from 'react-native-xml2js';
-
+import FooterBottons from '../components/FooterBottons';
+/**
+ * the svg file fetched is a map of a school floor. we call it a cluster because 
+ * its a cluster of mac computers. 
+ * this function adds profile pictures of users connected on each mac to the svg file
+ *
+ * @param {*} svgString stringified svg file of the cluster map
+ * @param {*} cluster   array of users who are connected. it holds user info such as which computer they r on
+ * @param {*} setClusters  hook to set the svg file state. which is then passed to SvgWithCss to be displayed with css enabled
+ */
 function addImageLinksToSVG(svgString, cluster, setClusters) {
     parser.parseString(svgString, (err, result) => {
         if (!err && cluster) {
@@ -17,8 +26,7 @@ function addImageLinksToSVG(svgString, cluster, setClusters) {
                         result.svg.image[i].$['xlink:href'] = item[1].image
                     }
                 })
-                if (result.svg.image[i].$['xlink:href'] === '')
-                {
+                if (result.svg.image[i].$['xlink:href'] === '') {
                     result.svg.image[i].$['xlink:href'] = null
                 }
             }
@@ -33,7 +41,7 @@ function addImageLinksToSVG(svgString, cluster, setClusters) {
     });
 }
 
-const Cluster = ({ navigator }) => {
+const Cluster = ({ navigation }) => {
     const [clusters, setClusters] = useState(null);
     const [posts, setPosts] = useState(null);
     const [cluster, setCluster] = useState(1)
@@ -78,35 +86,44 @@ const Cluster = ({ navigator }) => {
     return (
         <View style={styles.container}>
             {/* Options */}
+            {/* Render the modified SVG */}
+            <View style={{flex:1,width:'100%', borderColor:'yellow', borderWidth:1}}>
             <View style={styles.optionsContainer}>
-                <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('e1')}>
+                <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('1', setCluster)}>
                     <Text style={styles.optionText}>e1</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('e2')}>
+                <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('2', setCluster)}>
                     <Text style={styles.optionText}>e2</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('e3')}>
+                <TouchableOpacity style={styles.optionButton} onPress={() => handleOptionPress('3', setCluster)}>
                     <Text style={styles.optionText}>e3</Text>
                 </TouchableOpacity>
             </View>
-            {/* Render the modified SVG */}
+
             {clusters ? (
                 <SvgWithCss
-                    xml={clusters}
-                    width="100%"
-                    height="100%"
+                xml={clusters}
                 />
-            ) :
+                ) :
                 <ActivityIndicator size='large' color={'#000'} />
             }
+            </View>
+            <View style={{ width: '100%' }}>
+
+                <View style={{ backgroundColor: '#F5BD38' }}>
+                    <FooterBottons navigation={navigation} />
+                </View>
+            </View>
         </View>
     );
 };
-
-const handleOptionPress = (option) => {
-    // Handle what each option does here
-    console.log(`Option ${option} pressed`);
-    // Implement your logic accordingly
+/**
+ * cluster choice. there are three clusters to choose from
+ *
+ * @param {*} option the cluster of choice
+ */
+const handleOptionPress = (option, setCluster) => {
+    setCluster(option)
 };
 
 const styles = StyleSheet.create({

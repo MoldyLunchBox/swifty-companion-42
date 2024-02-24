@@ -24,7 +24,7 @@ const Routes = ({ loaded, setLoaded }) => {
       <Vif condition={loaded}>
       {/* <SafeAreaView> */}
         <NavigationContainer>
-          <Stack.Navigator initialRouteName={`${state.token ? 'search' : 'login'}`} screenOptions={{ headerShown: true }}>
+          <Stack.Navigator initialRouteName={`${state.token ? 'cluster' : 'login'}`} screenOptions={{ headerShown: false }}>
             
             <Stack.Screen name="search" component={Search} />
             
