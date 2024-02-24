@@ -20,13 +20,8 @@ function addImageLinksToSVG(svgString, cluster, setClusters, oo) {
         if (!err && cluster) {
             // console.log(typeof(result.svg))
             for (let i = 0; i < result.svg.image.length; i++) {
-                console.log('first')
-                console.log(cluster[result.svg.image[i].$.id])
-
-                if (cluster[result.svg.image[i].$.id] && cluster[result.svg.image[i].$.id]['image']) {
-                    console.log('w', cluster[result.svg.image[i].$.id]['image']);
+                if (cluster[result.svg.image[i].$.id] && cluster[result.svg.image[i].$.id]['image'])
                     result.svg.image[i].$['xlink:href'] = cluster[result.svg.image[i].$.id].image
-                }
                 else
                     result.svg.image[i].$['xlink:href'] = 'https://m.media-amazon.com/images/I/31DhmKeNrWL._AC_UF1000,1000_QL80_.jpg'
             }

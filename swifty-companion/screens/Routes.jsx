@@ -14,14 +14,13 @@ const Stack = createNativeStackNavigator();
 
 const Routes = ({ loaded, setLoaded }) => {
   const { state } = useAuthContext()
-
   return (
     <>
       <Vif condition={!loaded}>
         <Splash setLoaded={setLoaded} />
       </Vif>
 
-      <Vif condition={loaded}>
+      <Vif condition={loaded  && state}>
       {/* <SafeAreaView> */}
         <NavigationContainer>
           <Stack.Navigator initialRouteName={`${state.token ? 'cluster' : 'login'}`} screenOptions={{ headerShown: false }}>
