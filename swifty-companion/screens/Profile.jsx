@@ -84,12 +84,12 @@ const Profile = ({ navigation, route }) => {
                                         </View>
                                         <View style={styles.col}>
                                             <Text style={styles.title}>Grade</Text>
-                                            <Text style={styles.title}>{user.cursus_users[2].grade}</Text>
+                                            <Text style={styles.title}>{user?.cursus_users?.filter(item => item.cursus.name === "42cursus")[0]?.grade || "-"}</Text>
                                         </View>
                                     </View>
 
                                     <View style={[styles.row, styles.br4]}>
-                                        <ProgressBar progress={user.cursus_users[2].level} />
+                                        {/* <ProgressBar progress={user.cursus_users[2].level} /> */}
                                     </View>
 
                                 </View>
