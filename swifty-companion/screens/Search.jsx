@@ -11,12 +11,17 @@ const Search = ({ navigation }) => {
     console.log("we r in search")
 
 
+    useEffect(()=>{
+      if (!state.token) 
+        navigation.navigate('login');
+    },[state])
 
     const hundleSearch = async () => {
         try {
 
             console.log('login', login)
             const res = await fetchUser(login.trim(), dispatch)
+            console.log('redirecting to ',res.displayname)
             navigation.navigate("profile", res);
         } catch (error) {
             console.log('search error')

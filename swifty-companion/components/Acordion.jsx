@@ -23,7 +23,7 @@ const Acordion = ({ panel, togglePanel }) => {
                                 panel.title == 'Skills' ?
                                 <SkillsAccordionContents skills={panel.content}/>
                                 : 
-                                <Text>sa</Text>
+                                null
                         }
                 </ScrollView>
             )}

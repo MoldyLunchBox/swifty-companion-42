@@ -7,7 +7,6 @@ const FooterBottons = ({ navigation }) => {
     let { signOut, state, dispatch } = useAuthContext();
     const logmeout = () => {
         signOut()
-        navigation.navigate("login");
 
     }
     const goto = (destination) => {

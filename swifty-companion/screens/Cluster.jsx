@@ -6,6 +6,7 @@ import Svg, { SvgXml } from 'react-native-svg';
 import { SvgWithCss } from 'react-native-svg/css';
 import parser from 'react-native-xml2js';
 import FooterBottons from '../components/FooterBottons';
+import { useAuthContext } from '../store/authProvider';
 /**
  * the svg file fetched is a map of a school floor. we call it a cluster because 
  * its a cluster of mac computers. 
@@ -47,6 +48,13 @@ const Cluster = ({ navigation }) => {
     const [clusters, setClusters] = useState(null);
     const [posts, setPosts] = useState(null);
     const [cluster, setCluster] = useState(1)
+
+    const { state } = useAuthContext()
+
+    useEffect(()=>{
+      if (!state.token) 
+        navigation.navigate('login');
+    },[state])
 
     useEffect(() => {
         const fetchData = async () => {

@@ -11,10 +11,14 @@ const ProjectsAccordionContents = ({ projects }) => {
   return (
     <View style={{  }}>
       {myProjects.map((project) => (
-        <View key={project.id} style={styles.projectContainer}>
+        
+          project.final_mark ? 
+          <View key={project.id} style={styles.projectContainer}>
           <Text style={styles.name}>{project.project.name}</Text>
           <Text style={styles.score}>{project.final_mark}</Text>
-        </View>
+          </View> 
+          : null
+        
       ))}
     </View>
   );

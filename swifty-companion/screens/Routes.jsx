@@ -14,6 +14,10 @@ const Stack = createNativeStackNavigator();
 
 const Routes = ({ loaded, setLoaded }) => {
   const { state } = useAuthContext()
+
+useEffect(()=>{
+  console.log('this is the state', state)
+},[state])
   return (
     <>
       <Vif condition={!loaded}>

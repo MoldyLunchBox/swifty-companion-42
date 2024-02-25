@@ -3,13 +3,14 @@ import { View, Image, Text, StyleSheet, ImageBackground, TouchableOpacity, Scrol
 import ProgressBar from '../components/ProgressBar';
 import Accordion from '../components/Acordion';
 import FooterBottons from '../components/FooterBottons';
+import { useAuthContext } from '../store/authProvider';
 
 const Profile = ({ navigation, route }) => {
     const [user, setUser] = useState(route.params)
+    const { state } = useAuthContext()
     const [panels, setPanels] = useState([
         { id: 1, title: 'Projects', content: user.projects_users, isExpanded: false },
         { id: 2, title: 'Skills', content: user.cursus_users, isExpanded: false },
-        { id: 3, title: 'Panel 3', content: 'Content for Panel 3', isExpanded: false },
     ]);
     const togglePanel = (id) => {
         const updatedPanels = panels.map((panel) =>
@@ -19,6 +20,13 @@ const Profile = ({ navigation, route }) => {
     };
 
 
+
+    useEffect(()=>{
+      if (!state.token) 
+        navigation.navigate('login');
+    },[state])
+
+console.log('user is', user.displayname)
     return (
         <>
             <ImageBackground
