@@ -97,7 +97,7 @@ console.log('user is', user.displayname)
                                     </View>
 
                                     <View style={[styles.row, styles.br4]}>
-                                        {/* <ProgressBar progress={user.cursus_users[2].level} /> */}
+                                        <ProgressBar progress={user?.cursus_users?.filter(item => item.cursus.name === "42cursus")[0]?.level || 0} />
                                     </View>
 
                                 </View>
