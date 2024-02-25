@@ -12,7 +12,12 @@ const SkillsAccordionContents = ({ skills }) => {
   }, [skills]);
 
 
-
+  function formatNumberWithTwoDecimals(num) {
+    if (typeof num !== 'number') {
+        throw new Error('Input must be a number');
+    }
+    return num.toFixed(2);
+}
 
 
   return (
@@ -22,7 +27,11 @@ const SkillsAccordionContents = ({ skills }) => {
       mySkills.map((skills) => (
         <View key={skills.id} style={styles.projectContainer}>
           <Text style={styles.name}>{skills.name}</Text>
-          <Text style={styles.score}>{skills.level}</Text>
+          <View style={{width:200,flexDirection:'row',justifyContent:'space-between', rowGap:10}}>
+
+          <Text style={styles.score}>{formatNumberWithTwoDecimals(skills.level)}</Text>
+          <Text style={styles.score}>{formatNumberWithTwoDecimals(skills.level/21*100)}%</Text>
+          </View>
         </View>
       ))
       : null
