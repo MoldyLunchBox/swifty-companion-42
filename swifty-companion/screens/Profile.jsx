@@ -26,7 +26,6 @@ const Profile = ({ navigation, route }) => {
         navigation.navigate('login');
     },[state])
 
-console.log('user is', user.displayname)
     return (
         <>
             <ImageBackground

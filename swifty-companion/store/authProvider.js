@@ -70,7 +70,6 @@ import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL } from "@env";
     const authContext = React.useMemo(
       () => ({
         signIn: async (code) => {
-          console.log('hello im here')
           let data;
           try {
             data = await axios.post(TOKEN_URL, {
@@ -84,7 +83,7 @@ import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL } from "@env";
             console.log("error:", error);
           }
           const tokenInfo = JSON.stringify(data.data);
-          console.log('token is ',data.data.access_token)
+          // console.log('token is ',data.data.access_token)
           await SecureStore.setItemAsync("token", tokenInfo);
           dispatch({ type: "SIGN_IN", token: data.data.access_token });
         },
