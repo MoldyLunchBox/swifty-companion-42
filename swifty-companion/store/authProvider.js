@@ -53,8 +53,8 @@ import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL } from "@env";
       const bootstrapAsync = async () => {
         let token;
         try {
-          const { tokenInfo } = await handleTokenExpiration(dispatch);
-          if (!tokenInfo.refreshed) {
+          const { tokenInfo, refreshed } = await handleTokenExpiration(dispatch);
+          if (refreshed) {
             dispatch({ type: "SIGN_IN", token: tokenInfo.access_token });
           }
         } catch (e) {
