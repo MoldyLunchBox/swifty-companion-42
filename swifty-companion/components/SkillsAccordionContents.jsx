@@ -5,8 +5,7 @@ const SkillsAccordionContents = ({ skills }) => {
   const [mySkills, setMySkills] = useState(null);
 
   useEffect(() => {
-    console.log(skills.filter(item => item.cursus.name === "42cursus"))
-    console.log('skills')
+    
 
     if (skills) setMySkills(skills?.filter(item => item.cursus.name === "42cursus")[0]?.skills);
   }, [skills]);

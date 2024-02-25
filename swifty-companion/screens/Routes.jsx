@@ -15,9 +15,6 @@ const Stack = createNativeStackNavigator();
 const Routes = ({ loaded, setLoaded }) => {
   const { state } = useAuthContext()
 
-useEffect(()=>{
-  console.log('this is the state', state)
-},[state])
   return (
     <>
       <Vif condition={!loaded}>
@@ -27,10 +24,8 @@ useEffect(()=>{
       <Vif condition={loaded  && state}>
       {/* <SafeAreaView> */}
         <NavigationContainer>
-          <Stack.Navigator initialRouteName={`${state.token ? 'cluster' : 'login'}`} screenOptions={{ headerShown: false }}>
-            
+          <Stack.Navigator initialRouteName={`${state.token ? 'search' : 'login'}`} screenOptions={{ headerShown: false }}>
             <Stack.Screen name="search" component={Search} />
-            
             <Stack.Screen name="login" component={Login} />
             <Stack.Screen name="profile" component={Profile} />
             <Stack.Screen name="cluster" component={Cluster} />

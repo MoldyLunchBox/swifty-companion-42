@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity,ToastAndroid } from 'react-native';
 import axios from "axios";
 import { useAuthRequest } from 'expo-auth-session'
 import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL } from "@env";
@@ -8,9 +8,7 @@ import { useAuthContext } from "../store/authProvider";
 const Login = ({navigation}) => {
     const [login, setLogin] = useState('');
     let {state, signIn, signOut } = useAuthContext();
-useEffect(()=>{
-console.log('state now' , state)
-},[])
+    
     const [request, response, promptAsync] = useAuthRequest({
         clientId: CLIENT_ID,
         clientSecret: CLIENT_SECRET,
@@ -23,9 +21,12 @@ console.log('state now' , state)
 
     const onPressLogin = async () => {
         try {
-            console.log('signIn')
             let res = await promptAsync()
+            if (res.params)
             await signIn(res.params.code)
+        else
+        ToastAndroid.show("AUTHENTICATION FAILED", ToastAndroid.SHORT)
+
             
         } catch (error) {
             
@@ -52,17 +53,8 @@ console.log('state now' , state)
                 resizeMode="contain"
             />
             <Text style={styles.loginText}>Login</Text>
-            <TextInput
-                style={styles.textInput}
-                placeholder="Enter your username"
-                value={login}
-                onChangeText={setLogin}
-            />
             <TouchableOpacity style={styles.buttonStyle} onPress={onPressLogin}>
                 <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonStyle} onPress={logmeout}>
-                <Text style={styles.buttonText}>Logout</Text>
             </TouchableOpacity>
         </View>
     );
@@ -72,12 +64,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
         width: '100%',
         paddingHorizontal: 20,
+        paddingVertical: 100,
+        backgroundColor:'white'
     },
     loginText: {
-        fontSize: 24,
+        fontSize: 50,
         marginTop: 40,
         marginBottom: 10,
     },

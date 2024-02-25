@@ -6,9 +6,8 @@ import { fetchUser } from '../utils/searchUsers';
 import FooterBottons from '../components/FooterBottons';
 
 const Search = ({ navigation }) => {
-    const [login, setLogin] = useState('tmoumni');
+    const [login, setLogin] = useState('');
     let { state, dispatch } = useAuthContext();
-    console.log("we r in search")
 
 
     useEffect(()=>{
@@ -19,9 +18,9 @@ const Search = ({ navigation }) => {
     const hundleSearch = async () => {
         try {
 
-            console.log('login', login)
             const res = await fetchUser(login.trim(), dispatch)
-            console.log('redirecting to ',res.displayname)
+        setLogin('')
+
             navigation.navigate("profile", res);
         } catch (error) {
             console.log('search error')
