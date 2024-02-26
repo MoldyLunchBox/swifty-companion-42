@@ -8,6 +8,7 @@ import FooterBottons from '../components/FooterBottons';
 const Search = ({ navigation }) => {
     const [login, setLogin] = useState('');
     let { state, dispatch } = useAuthContext();
+    let { signOut } = useAuthContext();
 
 
     useEffect(()=>{
@@ -18,9 +19,9 @@ const Search = ({ navigation }) => {
     const hundleSearch = async () => {
         try {
 
-            const res = await fetchUser(login.trim(), dispatch)
+            const res = await fetchUser(login.trim(), dispatch, signOut)
         setLogin('')
-
+            console.log(res)
             navigation.navigate("profile", res);
         } catch (error) {
             console.log('search error')
