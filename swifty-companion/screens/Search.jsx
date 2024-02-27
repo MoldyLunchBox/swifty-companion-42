@@ -11,18 +11,23 @@ const Search = ({ navigation }) => {
     let { signOut } = useAuthContext();
 
 
-    useEffect(()=>{
-      if (!state.token) 
-        navigation.navigate('login');
-    },[state])
+    useEffect(() => {
+        if (!state.token)
+            navigation.navigate('login');
+    }, [state])
 
     const hundleSearch = async () => {
         try {
+            const regex = /^$|[/\.]/;
 
-            const res = await fetchUser(login.trim(), dispatch, signOut)
-        setLogin('')
-            console.log(res)
-            navigation.navigate("profile", res);
+            if (regex.test(login.trim()) || login.trim().length < 3)
+                ToastAndroid.show("USER NOT FOUND", ToastAndroid.SHORT)
+            else {
+                const res = await fetchUser(login.trim(), dispatch, signOut)
+                setLogin('')
+                console.log(res)
+                navigation.navigate("profile", res);
+            }
         } catch (error) {
             console.log('search error')
             ToastAndroid.show("USER NOT FOUND", ToastAndroid.SHORT)

@@ -54,10 +54,10 @@ const Profile = ({ navigation, route }) => {
                                     {/* Right Part with Multiple Rows */}
                                     <View style={styles.rightContainer}>
                                         <View style={[styles.row, styles.br4, styles.grey]}>
-                                            <Text style={styles.title}>{user.displayname}</Text>
+                                            <Text style={styles.title}>{user?.displayname}</Text>
                                         </View>
                                         <View style={[styles.row, styles.br4, styles.grey]}>
-                                            <Text style={styles.title}>{user.last_name}</Text>
+                                            <Text style={styles.title}>{user?.last_name}</Text>
                                         </View>
                                         <View style={[styles.row, styles.br4, styles.grey]}>
                                             <Text style={styles.title}> {user.campus[0].city}</Text>
