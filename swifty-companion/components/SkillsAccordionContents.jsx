@@ -23,13 +23,13 @@ const SkillsAccordionContents = ({ skills }) => {
     <View style={{  }}>
       {
         mySkills ? 
-      mySkills.map((skills) => (
-        <View key={skills.id} style={styles.projectContainer}>
-          <Text style={styles.name}>{skills.name}</Text>
+      mySkills?.map((skills) => (
+        <View key={skills?.id} style={styles.projectContainer}>
+          <Text style={styles.name}>{skills?.name}</Text>
           <View style={{width:200,flexDirection:'row',justifyContent:'space-between', rowGap:10}}>
 
-          <Text style={styles.score}>{formatNumberWithTwoDecimals(skills.level)}</Text>
-          <Text style={styles.score}>{formatNumberWithTwoDecimals(skills.level/21*100)}%</Text>
+          <Text style={styles.score}>{formatNumberWithTwoDecimals(skills?.level)}</Text>
+          <Text style={styles.score}>{formatNumberWithTwoDecimals(skills?.level/21*100)}%</Text>
           </View>
         </View>
       ))

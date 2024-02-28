@@ -18,14 +18,14 @@ const Search = ({ navigation }) => {
 
     const hundleSearch = async () => {
         try {
-            const regex = /^$|[/\.]/;
+            const regex = /^$|[/\.\\]/;
 
-            if (regex.test(login.trim()) || login.trim().length < 3)
+            if (regex.test(login.trim()))
                 ToastAndroid.show("USER NOT FOUND", ToastAndroid.SHORT)
             else {
                 const res = await fetchUser(login.trim(), dispatch, signOut)
                 setLogin('')
-                console.log(res)
+                // console.log(res)
                 navigation.navigate("profile", res);
             }
         } catch (error) {
