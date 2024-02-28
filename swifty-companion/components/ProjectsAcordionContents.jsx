@@ -3,19 +3,21 @@ import React, { useEffect, useState } from 'react';
 
 const ProjectsAccordionContents = ({ projects }) => {
   const [myProjects, setMyProjects] = useState(projects);
+  console.log('projects', projects)
 
   useEffect(() => {
-    if (projects) setMyProjects(projects.filter((element) => element.cursus_ids[0] === 21));
+    
+    if (projects) setMyProjects(projects?.filter((element) => element?.cursus_ids?.[0] === 21));
   }, [projects]);
 
   return (
     <View style={{  }}>
-      {myProjects.map((project) => (
+      {myProjects?.map((project) => (
         
           project.final_mark ? 
-          <View key={project.id} style={styles.projectContainer}>
-          <Text style={styles.name}>{project.project.name}</Text>
-          <Text style={styles.score}>{project.final_mark}</Text>
+          <View key={project?.id} style={styles.projectContainer}>
+          <Text style={styles.name}>{project?.project?.name}</Text>
+          <Text style={styles.score}>{project?.final_mark}</Text>
           </View> 
           : null
         

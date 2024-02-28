@@ -18,10 +18,10 @@ const Acordion = ({ panel, togglePanel }) => {
                         {
                             panel.title == 'Projects'
                                 ?
-                                <ProjectsAcordionContents projects={panel.content}/>
+                                <ProjectsAcordionContents projects={panel?.content}/>
                                 :
                                 panel.title == 'Skills' ?
-                                <SkillsAccordionContents skills={panel.content}/>
+                                <SkillsAccordionContents skills={panel?.content}/>
                                 : 
                                 null
                         }

@@ -9,8 +9,8 @@ const Profile = ({ navigation, route }) => {
     const [user, setUser] = useState(route.params)
     const { state } = useAuthContext()
     const [panels, setPanels] = useState([
-        { id: 1, title: 'Projects', content: user.projects_users, isExpanded: false },
-        { id: 2, title: 'Skills', content: user.cursus_users, isExpanded: false },
+        { id: 1, title: 'Projects', content: user?.projects_users, isExpanded: false },
+        { id: 2, title: 'Skills', content: user?.cursus_users, isExpanded: false },
     ]);
     const togglePanel = (id) => {
         const updatedPanels = panels.map((panel) =>
@@ -46,7 +46,7 @@ const Profile = ({ navigation, route }) => {
                                     {/* Left Square with Image */}
                                     <View style={styles.imageContainer}>
                                         <ImageBackground
-                                            source={{ uri: `${user.image.link}` }}
+                                            source={{ uri: `${user?.image?.link}` }}
                                             style={styles.image}
                                             resizeMode="cover"
                                         />
@@ -60,13 +60,13 @@ const Profile = ({ navigation, route }) => {
                                             <Text style={styles.title}>{user?.last_name}</Text>
                                         </View>
                                         <View style={[styles.row, styles.br4, styles.grey]}>
-                                            <Text style={styles.title}> {user.campus[0].city}</Text>
+                                            <Text style={styles.title}> {user?.campus?.[0]?.city}</Text>
                                         </View>
                                         <View style={[styles.row, styles.br4, styles.grey]}>
-                                            <Text style={styles.title}> {user.kind}</Text>
+                                            <Text style={styles.title}> {user?.kind}</Text>
                                         </View>
                                         {/* <View style={[styles.row, styles.br4]}>
-                                        <Text style={styles.title}> {user.displayname}</Text>
+                                        <Text style={styles.title}> {user?.displayname}</Text>
                                     </View> */}
                                         {/* Add more rows as needed */}
                                     </View>
@@ -83,11 +83,11 @@ const Profile = ({ navigation, route }) => {
                                     <View style={[styles.row, { paddingVertical: 8 }, styles.grey, styles.br4]}>
                                         <View style={styles.col}>
                                             <Text style={styles.title}>Wallet</Text>
-                                            <Text style={styles.title}>{user.wallet}</Text>
+                                            <Text style={styles.title}>{user?.wallet}</Text>
                                         </View>
                                         <View style={styles.col}>
                                             <Text style={styles.title}>Correction Points</Text>
-                                            <Text style={styles.title}>{user.correction_point}</Text>
+                                            <Text style={styles.title}>{user?.correction_point}</Text>
                                         </View>
                                         <View style={styles.col}>
                                             <Text style={styles.title}>Grade</Text>
