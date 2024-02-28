@@ -18,7 +18,7 @@ const Search = ({ navigation }) => {
 
     const hundleSearch = async () => {
         try {
-            const regex = /^$|[/\.\\]/;
+            const regex = /^$|[/\.\\?]/;
 
             if (regex.test(login.trim()))
                 ToastAndroid.show("USER NOT FOUND", ToastAndroid.SHORT)
