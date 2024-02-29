@@ -24,22 +24,18 @@ A mobile app built with React Native and Expo that utilizes the 42 API to search
 5. [x] **Implement Navigation:**
    - [x] Allow users to navigate back to the search view from the user information view.
 
-6. [ ] **Layout and Styling:**
-   - [ ] Implement Auto Layout or constraint/modern layout for iOS9+ iPhones.
-   - [x] Enhance the design with custom cells, scroll views, and other UI enhancements.
-
-7. [x] **Bonus Features:**
+6. [x] **Bonus Features:**
    - [x] Consider implementing bonus features such as recreating tokens at expiration, improving design aesthetics, incorporating custom cells, or adding additional functionality to enhance the user experience.
 
-8. [ ] **Testing and Debugging:**
-   - [ ] Test the app thoroughly to ensure functionality and responsiveness across various devices.
-   - [ ] Debug any issues encountered during testing.
+7. [x] **Testing and Debugging:**
+   - [x] Test the app thoroughly to ensure functionality and responsiveness across various devices.
+   - [x] Debug any issues encountered during testing.
 
-9. [ ] **Documentation and Presentation:**
+8. [ ] **Documentation and Presentation:**
    - [ ] Document the project, including installation instructions and any known issues.
    - [ ] Prepare a presentation highlighting the features, technologies used, and any challenges faced during development.
 
-10. [x] **Version Control and Deployment:**
+9. [x] **Version Control and Deployment:**
     - [x] Commit changes regularly to the Git repository.
     - [x] Ensure sensitive information is not exposed in the codebase.
     - [x] Deploy the app to a test environment for evaluation and feedback.
